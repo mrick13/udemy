@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pokemon } from '../pokemon';
 import { POKEMONS } from '../mock-pokemon-list';
 
@@ -14,14 +14,20 @@ export class DetailPokemonComponent implements OnInit {
   pokemonList : Pokemon [];
   pokemon : Pokemon|undefined;
 
-  constructor(private routeur : ActivatedRoute) { }
+  constructor(private route : ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.pokemonList = POKEMONS
-    const pokemonId : string|null = this.routeur.snapshot.paramMap.get('id');
+    const pokemonId : string|null = this.route.snapshot.paramMap.get('id');
+
     if(pokemonId) { 
       this.pokemon = this.pokemonList.find(pokemon => pokemon.id == +pokemonId)
     }
+
+  }
+
+  goToPokemonList() {
+    this.router.navigate(['/pokemons']);
   }
 
 }
