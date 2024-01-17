@@ -20,7 +20,6 @@ export class PokemonFormComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    console.log('la aussi');
     
     this.types = this.pokemonService.getPokemonTypeList();
     this.isAddForm = this.router.url.includes('add');
