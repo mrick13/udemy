@@ -7,8 +7,6 @@ import { Pokemon } from '../pokemon';
     <h2 class="center">Ajouter un Pokémon</h2>
     <app-pokemon-form [pokemon]="pokemon"><app-pokemon-form>
   `,
-  styles: [
-  ]
 })
 export class AddPokemonComponent implements OnInit {
 
