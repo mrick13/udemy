@@ -2,14 +2,25 @@ import { Injectable } from '@angular/core';
 import { Pokemon } from './pokemon';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
+import { getDatabase, ref, set } from "firebase/database";
 import { error, table } from 'console';
+import { get } from 'http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
 
-  constructor(private http: HttpClient) {}
+  pokemon : Pokemon []
+
+  constructor(private http: HttpClient) {
+  }
+  
+
+
+
+
+
 
   getPokemonList() : Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>('api/pokemons').pipe(
@@ -47,16 +58,29 @@ export class PokemonService {
     )
   }
 
-  addPokemon(pokemon: Pokemon): Observable<Pokemon> {
-    const httpOptions = {
-      headers : new HttpHeaders({ 'Content-type' : 'application/json'})
-    };
+  // addPokemon(pokemon: Pokemon) {
+  //   const db = getDatabase();
+  //   set(ref(db, 'pokemon/' + pokemon.id), {
+  //     id: '',
+  //     name: '',
+  //     hp : '',
+  //     cp: '',
+  //     picture: '',
+  //     types: '',
+  //     created: '',
+  //   });
+  // }
+  
+   addPokemon(pokemon: Pokemon): Observable<Pokemon> {
+     const httpOptions = {
+       headers : new HttpHeaders({ 'Content-type' : 'application/json'})
+     };
 
-    return this.http.post<Pokemon>('api/pokemons' , pokemon , httpOptions).pipe(
-      tap((response) => this.log(response)),
-      catchError((error) => this.handleError(error , null))
-    );
-  }
+     return this.http.post<Pokemon>('api/pokemons' , pokemon , httpOptions).pipe(
+       tap((response) => this.log(response)),
+       catchError((error) => this.handleError(error , null))
+     );
+   }
 
   deletePokemonById(pokemonId: number) : Observable<null> {
     return this.http.delete(`api/pokemons/${pokemonId}`).pipe(
