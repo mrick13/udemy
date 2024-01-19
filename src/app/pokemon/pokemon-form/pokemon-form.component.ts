@@ -55,22 +55,25 @@ export class PokemonFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.isAddForm) {
-      // récupérer l'id dans un champ number
-      // Le donner dans id et dans urlImage
-      this.pokemon.picture = 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/xxx.png'.replace('xxx',this.pokemon.id.toString())
-      this.pokemonService.addPokemon(this.pokemon).then(() => {
-        this.router.navigate(['/pokemon/', this.pokemon.id])}
-      );
-      
-
-    /*else { 
-      this.pokemonService.updatePokemon(this.pokemon)
-      .subscribe(() => this.router.navigate(['/pokemon', this.pokemon.id]));
+    // Récupérer l'ID depuis un champ number
+    // Logique de formatage de l'ID
+    let formattedId;
+  
+    if (this.pokemon.id >= 1 && this.pokemon.id <= 9) {
+      formattedId = `00${this.pokemon.id}`;
+    } else if (this.pokemon.id >= 10 && this.pokemon.id <= 99) {
+      formattedId = `0${this.pokemon.id}`;
+    } else {
+      formattedId = this.pokemon.id.toString();
     }
-    */
-    }
+  
+    // Construction de l'URL de l'image
+    this.pokemon.picture = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${formattedId}.png`;
+    this.pokemonService.addPokemon(this.pokemon).then(() => {
+      this.router.navigate(['/pokemon/', this.pokemon.id]);
+    });
   }
+  
 }
 
 //https://assets.pokemon.com/assets/cms2/img/pokedex/detail/xxx.png

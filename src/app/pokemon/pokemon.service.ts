@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { initializeApp } from 'firebase/app';
 import { child, getDatabase, ref, get, set, onValue } from "firebase/database";
-import { types } from 'util';
 import { error } from 'console';
 
 @Injectable({
@@ -94,6 +93,7 @@ export class PokemonService {
   }
 
   searchPokemonList(term : string): Observable<Pokemon[]> {
+    const dbRef = ref(getDatabase());
     if(term.length <= 1) {
       return of ([]); 
     }
