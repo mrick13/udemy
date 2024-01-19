@@ -5,6 +5,7 @@ import { Observable, catchError, of, tap } from 'rxjs';
 import { initializeApp } from 'firebase/app';
 import { child, getDatabase, ref, get, set, onValue } from "firebase/database";
 import { types } from 'util';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -49,18 +50,27 @@ export class PokemonService {
 
 
 
-  getPokemonList() : Observable<Pokemon[]> {
-    return this.http.get<Pokemon[]>('api/pokemons').pipe(
-      catchError((error) => this.handleError(error , []))      
-    )
-  }
+  getPokemonList(): Pokemon[]  {
+    const dbRef = ref(getDatabase());
+    const pokemons : Pokemon [] = []
+    get(child(dbRef, `pokemon`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        for(const pokemon of Object.entries<Pokemon>(snapshot.val())) {
+          pokemons.push(pokemon[1])
+        }
+        console.log(snapshot.val());
+        
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+        return pokemons;
+      }      
+    
 
   getPokemonById(pokemonId: number): any | Pokemon {
-    // return this.http.get<Pokemon>(`api/pokemons/${pokemonId}`).pipe(
-    //   tap((pokemon) => console.log(pokemon)),
-    //   catchError((error) => this.handleError(error , undefined)) 
-    // );
-
     const dbRef = ref(getDatabase());
     get(child(dbRef, `pokemon/${pokemonId}`)).then((snapshot) => {
       if (snapshot.exists()) {

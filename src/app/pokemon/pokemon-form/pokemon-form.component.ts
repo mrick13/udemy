@@ -59,11 +59,8 @@ export class PokemonFormComponent implements OnInit {
       // récupérer l'id dans un champ number
       // Le donner dans id et dans urlImage
       this.pokemon.picture = 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/xxx.png'.replace('xxx',this.pokemon.id.toString())
-
       this.pokemonService.addPokemon(this.pokemon).then(() => {
-        console.log(this.pokemon);
-        console.log(this.pokemon.id);
-        this.router.navigate(['/pokemon', this.pokemon.id])}
+        this.router.navigate(['/pokemon/', this.pokemon.id])}
       );
       
 
