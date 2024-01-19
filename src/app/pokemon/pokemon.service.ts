@@ -70,20 +70,27 @@ export class PokemonService {
       }      
     
 
-  getPokemonById(pokemonId: number): any | Pokemon {
+  getPokemonById(pokemonId: number): Promise<Pokemon> {
     const dbRef = ref(getDatabase());
-    get(child(dbRef, `pokemon/${pokemonId}`)).then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-        this.pokemon = snapshot.val();
-        return this.pokemon;
-      } else {
-        console.log("No data available");
-        return new Pokemon;
-      }
-    }).catch((error) => {
-      console.error(error);
+    return new Promise((resolve, reject) => {
+      get(child(dbRef, `pokemon/${pokemonId}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          this.pokemon = snapshot.val();
+          resolve(snapshot.val());
+        } else {
+          console.log("No data available");
+          reject(snapshot.val());
+        }
+      }).catch((error) => {
+        console.error(error);
+        reject();
+      });
     });
+
+
+
+    
   }
 
   searchPokemonList(term : string): Observable<Pokemon[]> {

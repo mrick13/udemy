@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pokemon } from '../pokemon';
 import { PokemonService } from '../pokemon.service';
-import { ref } from 'firebase/database';
 
 @Component({
   selector: 'app-detail-pokemon',
@@ -10,7 +9,8 @@ import { ref } from 'firebase/database';
 })
 export class DetailPokemonComponent implements OnInit {
 
-  pokemon : Pokemon;
+  pokemonList : Pokemon [];
+  pokemon : Pokemon|undefined;
 
   constructor(
     private route : ActivatedRoute, 
@@ -22,12 +22,11 @@ export class DetailPokemonComponent implements OnInit {
     const pokemonId : string|null = this.route.snapshot.paramMap.get('id');
 
     if(pokemonId) { 
-      this.pokemon = this.pokemonService.getPokemonById(+pokemonId)
-      console.log(this.pokemon);
-      
-
-      }
+      this.pokemonService.getPokemonById(+pokemonId).then((pokemon: any) => {
+        this.pokemon = pokemon;
+      })
   }
+}
 
   deletePokemon(pokemon : Pokemon) {
     this.pokemonService.deletePokemonById(pokemon.id)
