@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pokemon } from './pokemon';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, of, tap } from 'rxjs';
+import { Observable, catchError, from, of, tap } from 'rxjs';
 import { initializeApp } from 'firebase/app';
 import { child, getDatabase, ref, get, set, onValue } from "firebase/database";
 import { error } from 'console';
@@ -11,7 +11,7 @@ import { error } from 'console';
 })
 export class PokemonService {
 
-  pokemon : Pokemon []
+  pokemons$ : Observable<Pokemon[]>
 
   
 
@@ -22,6 +22,7 @@ export class PokemonService {
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
     this.getPokemonTypeList();
+    this.pokemons$ = this.getPokemonList();
 
   }
 
@@ -49,23 +50,21 @@ export class PokemonService {
 
 
 
-  getPokemonList(): Pokemon[]  {
+  getPokemonList(): Observable<Pokemon[]>  {
     const dbRef = ref(getDatabase());
-    const pokemons : Pokemon [] = []
+    const pokemons : Pokemon[] = []
     get(child(dbRef, `pokemon`)).then((snapshot) => {
       if (snapshot.exists()) {
         for(const pokemon of Object.entries<Pokemon>(snapshot.val())) {
           pokemons.push(pokemon[1])
         }
-        console.log(snapshot.val());
-        
       } else {
         console.log("No data available");
       }
     }).catch((error) => {
       console.error(error);
     });
-        return pokemons;
+        return of(pokemons) ;
       }      
     
 
@@ -74,8 +73,7 @@ export class PokemonService {
     return new Promise((resolve, reject) => {
       get(child(dbRef, `pokemon/${pokemonId}`)).then((snapshot) => {
         if (snapshot.exists()) {
-          console.log(snapshot.val());
-          this.pokemon = snapshot.val();
+          this.pokemons$ = snapshot.val();
           resolve(snapshot.val());
         } else {
           console.log("No data available");
@@ -85,23 +83,34 @@ export class PokemonService {
         console.error(error);
         reject();
       });
-    });
-
-
-
-    
+    });    
   }
 
-  searchPokemonList(term : string): Observable<Pokemon[]> {
+  searchPokemonList(term : string ): Pokemon[] {
     const dbRef = ref(getDatabase());
+    const list: Pokemon[] = [];
     if(term.length <= 1) {
-      return of ([]); 
+      return [];
     }
 
-    return this.http.get<Pokemon[]>(`api/pokemons/?name=${term}`).pipe(
-      tap((response) => this.log(response)),
-      catchError((error) => this.handleError(error , []))
-    )
+
+
+    return list;
+    // get(child(dbRef , `pokemon/${term}`)).then((snapshot) => {
+    //   if (snapshot.exists()) {
+    //     for(const pokemon of Object.entries<Pokemon>(snapshot.val())){
+    //       if (term === pokemon[1].name) {
+    //         list.push(pokemon[1]);
+    //       };
+    //     };
+    //   };
+    //   return list;
+    // }).catch((error) => {
+    //   console.error(error);
+    //   return of([]);
+    // });
+    // console.log("dernier");
+    // return of([]);
   } 
 
   updatePokemon(pokemon: Pokemon): Observable<null> {

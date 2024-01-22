@@ -3,7 +3,7 @@
 
         <app-search-pokemon></app-search-pokemon>
 
-        <div *ngFor="let pokemon of pokemonList" class="col m4 s6">
+        <div *ngFor="let pokemon of pokemonList$ | async" class="col m4 s6">
             <div (click)="goToPokemon(pokemon)"  class="card horizontal"  pkmnBorderCard>
                 <div class="card-image">
                     <img [src]="pokemon.picture">
