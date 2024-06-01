@@ -13,27 +13,27 @@ import { PokemonService } from '../pokemon.service';
 export class SearchPokemonComponent implements OnInit {
   searchTerms = new Subject<string>();
   pokemons$: Observable<Pokemon[]>
-  
+
 
   constructor(
     private router: Router,
     private pokemonService: PokemonService
-    ) { }
+  ) { }
 
 
-    //paramètres de recherche de pokemon
+  //paramètres de recherche de pokemon
   ngOnInit(): void {
     console.log("init");
     this.pokemons$ = this.pokemonService.getPokemonList();
 
   }
 
-    search(term: string) {
-      this.searchTerms.next(term);
-    }
+  search(term: string) {
+    this.searchTerms.next(term);
+  }
 
-    goToDetail(pokemon: Pokemon) {
-      const link = ['/pokemon', pokemon.id];
-      this.router.navigate(link); 
-    }
+  goToDetail(pokemon: Pokemon) {
+    const link = ['/pokemon', pokemon.id];
+    this.router.navigate(link);
+  }
 }
