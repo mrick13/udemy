@@ -10,12 +10,14 @@ import { PokemonModule } from './pokemon/pokemon.module';
 import { FormsModule } from '@angular/forms';
 import { InMemoryDataService } from './in-memory-data.service';
 import { LoginComponent } from './login/login.component';
+import { HomepageComponent } from './homepage/homepage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,

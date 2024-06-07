@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       .subscribe((isLoggedIn: boolean) => {
         this.setMessage();
         if (isLoggedIn) {
-          this.router.navigate(['/pokemons']);
+          this.router.navigate(['/homepage']);
         } else {
           this.password = ''
           this.router.navigate(['/login']);

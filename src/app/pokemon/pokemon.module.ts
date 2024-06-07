@@ -13,8 +13,10 @@ import { AddPokemonComponent } from './add-pokemon/add-pokemon.component';
 import { SearchPokemonComponent } from './search-pokemon/search-pokemon.component';
 import { LoaderComponent } from './loader/loader.component';
 import { AuthGuard } from '../auth.guard';
+import { HomepageComponent } from '../homepage/homepage.component';
 
 const pokemonRoutes: Routes = [
+  { path: 'homepage' , component : HomepageComponent , canActivate : [AuthGuard] },
   { path: 'edit/pokemon/:id' , component: EditPokemonComponent , canActivate: [AuthGuard] },
   { path: 'pokemon/add', component: AddPokemonComponent, canActivate: [AuthGuard] },
   { path: 'pokemons' , component: ListPokemonComponent, canActivate: [AuthGuard] },
