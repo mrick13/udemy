@@ -20,10 +20,10 @@ export class SearchPokemonComponent implements OnInit {
   constructor(
     private router: Router,
     private pokemonService: PokemonService
-    ) { }
+  ) { }
 
 
-    //paramètres de recherche de pokemon
+  //paramètres de recherche de pokemon
   ngOnInit(): void {
     console.log("init");
     this.pokemons$ = this.pokemonService.getPokemonList()
