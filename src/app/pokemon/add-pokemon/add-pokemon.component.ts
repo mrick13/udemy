@@ -15,5 +15,4 @@ export class AddPokemonComponent implements OnInit {
   ngOnInit() {
     this.pokemon = new Pokemon();
   }
-
 }

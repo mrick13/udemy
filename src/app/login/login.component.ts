@@ -49,6 +49,46 @@ export class LoginComponent implements OnInit {
     this.auth.logout();
     this.message = 'Vous êtes déconnecter'
   }
-
-
 }
+
+  // ngOnInit() {
+  //   // Initialiser le formulaire
+  //   var elems = document.querySelectorAll('select');
+  //   var instances = M.FormSelect.init(elems)
+  //   // Créer les propriétés du formulaire
+  //   this.loginForm = this.formBuilder.group({
+  //     email: [null, [Validators.required]],
+  //     password: [null, [Validators.required, Validators.minLength(8)]],
+  //   });
+  // }
+    
+  
+  // setMessage() {
+  //   if(this.auth.isLoggedIn) {
+  //     this.message = 'Vous êtes connecté'
+  //   } else {
+  //     this.message = 'Identifiant ou mot de passe incorrect'
+  //   }
+  // }
+
+  // login() {
+  //   this.message = 'Tentative de connexion en cours...';
+  //   this.auth.login(this.name, this.password)
+  //   .subscribe((isLoggedIn: boolean) => {
+  //     this.setMessage();
+  //     if(isLoggedIn) {
+  //       this.router.navigate(['/pokemons']);
+  //     } else {
+  //       this.password = ''
+  //       this.router.navigate(['/login']);
+  //     }
+      
+  //   })
+  // }
+
+  // logout() {
+  //   this.auth.logout();
+  //   this.message = 'Vous êtes déconnecter'
+  // }
+
+

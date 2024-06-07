@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Pokemon } from './pokemon';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, from, of, tap } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { initializeApp } from 'firebase/app';
-import { child, getDatabase, ref, get, set, onValue } from "firebase/database";
-import { error } from 'console';
+import { child, getDatabase, ref, get, set } from "firebase/database";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,6 @@ import { error } from 'console';
 export class PokemonService {
 
   pokemons$ : Observable<Pokemon[]>
-
-  
 
   constructor(private http: HttpClient) {
     const firebaseConfig = {
@@ -23,11 +20,9 @@ export class PokemonService {
     const database = getDatabase(app);
     this.getPokemonTypeList();
     this.pokemons$ = this.getPokemonList();
-
   }
 
   getPokemonTypeList(): string[] {
-
     const dbRef = ref(getDatabase());
     const types: string[] = [];
     get(child(dbRef, `types`)).then((snapshot) => {
@@ -47,9 +42,6 @@ export class PokemonService {
     return types;
   }
 
-
-
-
   getPokemonList(): Observable<Pokemon[]>  {
     const dbRef = ref(getDatabase());
     const pokemons : Pokemon[] = []
@@ -64,9 +56,8 @@ export class PokemonService {
     }).catch((error) => {
       console.error(error);
     });
-        return of(pokemons) ;
-      }      
-    
+    return of(pokemons) ;
+  }  
 
   getPokemonById(pokemonId: number): Promise<Pokemon> {
     const dbRef = ref(getDatabase());
@@ -92,9 +83,6 @@ export class PokemonService {
     if(term.length <= 1) {
       return [];
     }
-
-
-
     return list;
     // get(child(dbRef , `pokemon/${term}`)).then((snapshot) => {
     //   if (snapshot.exists()) {
@@ -126,11 +114,8 @@ export class PokemonService {
   
    addPokemon(pokemon: Pokemon): Promise<void> {
     const db = getDatabase();
-    console.log(pokemon);
-    
     return set(ref(db, 'pokemon/' + pokemon.id), pokemon);
    }
-
 
   deletePokemonById(pokemonId: number) : Observable<null> {
     return this.http.delete(`api/pokemons/${pokemonId}`).pipe(
@@ -147,7 +132,4 @@ export class PokemonService {
     console.error(error)
     return of (errorValue)
   }
-
-  
-
 }

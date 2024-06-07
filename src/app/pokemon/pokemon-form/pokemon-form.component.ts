@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
 import { Pokemon } from '../pokemon';
 import { Router } from '@angular/router';
-import { async } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-form',
@@ -73,7 +72,4 @@ export class PokemonFormComponent implements OnInit {
       this.router.navigate(['/pokemon/', this.pokemon.id]);
     });
   }
-  
 }
-
-//https://assets.pokemon.com/assets/cms2/img/pokedex/detail/xxx.png
