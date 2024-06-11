@@ -6,6 +6,7 @@ export class Pokemon {
     cp: number;
     picture: string;
     types: Array<string>;
+    generations: Array<string>;
     created: Date;
 
     constructor(
@@ -14,6 +15,7 @@ export class Pokemon {
         cp: number = 10,
         id: number = 999,
         types: string[] = ['Normal'],
+        generations: string[] = ['1'],
         created : Date = new Date()
     ) {
         this.name = name;
@@ -22,6 +24,7 @@ export class Pokemon {
         this.id = id;
         this.types = types;
         this.created= created;
+        this.generations = generations;
     }
 
 }

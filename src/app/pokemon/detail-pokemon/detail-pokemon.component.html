@@ -28,6 +28,13 @@
                 </td>
               </tr>
               <tr>
+                <td>Génération</td>
+                <td>
+                  <span *ngFor="let generation of pokemon.generations" class="{{ generation }}">{{ generation }}</span>
+                </td>
+              </tr>
+              <tr>
+                
                 <td>Date de création</td>
                 <td><em>{{ pokemon.created | date:"dd/MM/yyyy" }}</em></td>
               </tr>

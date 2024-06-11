@@ -42,6 +42,26 @@ export class PokemonService {
     return types;
   }
 
+  getPokemonGenerationList() {
+    const dbRef = ref(getDatabase());
+    const generations: string[] = [];
+    get(child(dbRef, `generations`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        for(const generation of Object.entries(snapshot.val())) {
+          generations.push(generation[0])
+        }
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+    return generations;
+  }
+
+
+
+
   getPokemonList(): Observable<Pokemon[]>  {
     const dbRef = ref(getDatabase());
     const pokemons : Pokemon[] = []

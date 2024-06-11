@@ -78,6 +78,24 @@
                 </span>
               </label>
             </p>
+          <!-- Pokemon Generation -->
+            <label for="generation">Génération</label>
+            <p *ngFor="let generation of generations">
+              <label>
+                <input type="checkbox"
+                  class="filled-in"
+                  id="{{ generation }}"
+                  [value]="generation"
+                  [checked]="hasGeneration(generation)"
+                  
+                  (change)="selectGeneration($event, generation)"/>
+                <span [attr.for]="generation">
+                  <div class="{{ generation }}">
+                    {{ generation }}
+                  </div>
+                </span>
+              </label>
+            </p>
           </form>
     
           <!-- Submit button -->

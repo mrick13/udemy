@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class PokemonFormComponent implements OnInit {
 
   @Input() pokemon: Pokemon;
+  generations: string[] ;
   types : string[];
   isAddForm: boolean;
 
@@ -22,6 +23,7 @@ export class PokemonFormComponent implements OnInit {
   ngOnInit() {
     
     this.types = this.pokemonService.getPokemonTypeList();
+    this.generations = this.pokemonService.getPokemonGenerationList();
     this.isAddForm = this.router.url.includes('add');
   }
 
@@ -53,6 +55,28 @@ export class PokemonFormComponent implements OnInit {
     return true;
   }
 
+  hasGeneration(generation: string): boolean {
+    return this.pokemon.generations.includes(generation);
+  }
+
+  selectGeneration($event: Event, generation: string) {
+    const isChecked: boolean = ($event.target as HTMLInputElement).checked;
+
+    if(isChecked) {
+      this.pokemon.generations.push(generation);
+    } else {
+      const index = this.pokemon.generations.indexOf(generation);
+      this.pokemon.types.splice(index, 1);
+    }
+  }
+
+  // isGenerationsValid(generation : string): boolean {
+  //   if(this.pokemon.types.length > 1 && !this.hasGeneration(generation)) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
   onSubmit() {
     // Récupérer l'ID depuis un champ number
     // Logique de formatage de l'ID
@@ -73,3 +97,6 @@ export class PokemonFormComponent implements OnInit {
     });
   }
 }
+
+
+// [disabled]="!isGenerationsValid(generation)"
