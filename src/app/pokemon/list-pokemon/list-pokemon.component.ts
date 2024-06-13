@@ -7,11 +7,13 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-list-pokemon',
   templateUrl: './list-pokemon.component.html',
+  styleUrls : ['./list-pokemon.component.css']
 })
 
 export class ListPokemonComponent implements OnInit {
 
   pokemonList$: Observable<Pokemon[]>; 
+  isCarouselView: boolean = true;
 
   constructor(
     private router : Router,
@@ -24,6 +26,9 @@ export class ListPokemonComponent implements OnInit {
 
   goToPokemon(pokemon : Pokemon) {
     this.router.navigate(['/pokemon', pokemon.id]);
+  }
+  toggleView(): void {
+    this.isCarouselView = !this.isCarouselView; // Change la valeur de la variable isCarouselView pour afficher la liste ou le carousel
   }
 
 }

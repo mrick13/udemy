@@ -37,5 +37,6 @@ export class EditPokemonComponent implements OnInit {
     } else {
       this.pokemon = undefined;
     }
+    // this.dialog.open(ConfirmationDialogComponent);
   }
 }

@@ -70,12 +70,6 @@ export class PokemonFormComponent implements OnInit {
     }
   }
 
-  // isGenerationsValid(generation : string): boolean {
-  //   if(this.pokemon.types.length > 1 && !this.hasGeneration(generation)) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
 
   onSubmit() {
     // Récupérer l'ID depuis un champ number

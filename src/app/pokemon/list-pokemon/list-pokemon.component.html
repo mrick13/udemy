@@ -2,7 +2,12 @@
     <div class="row">
 
         <app-search-pokemon></app-search-pokemon>
-
+        <div class="toggle-button-container">
+          <button (click)="toggleView()">
+            {{ isCarouselView ? 'Afficher en liste' : 'Afficher en carrousel' }}
+          </button>
+        </div>
+        <div *ngIf="!isCarouselView">
         <div *ngFor="let pokemon of pokemonList$ | async" class="col m4 s6">
             <div (click)="goToPokemon(pokemon)"  class="card horizontal"  pkmnBorderCard>
                 <div class="card-image">
@@ -33,3 +38,33 @@
 >
 +
 </a>
+
+
+
+  
+  <!-- <div *ngIf="isCarouselView">
+    <c-carousel [interval]="0">
+      <c-carousel-inner>
+        <c-carousel-item *ngFor="let pokemon of pokemonList$ | async">
+          <img
+            [src]="pokemon.picture"
+            alt="{{ pokemon.name }}"
+            class="d-block w-100"
+            loading="lazy"
+          />
+          <div class="carousel-caption">
+            <h5>{{ pokemon.name }}</h5>
+            <p><small>{{ pokemon.created | date: 'dd/MM/yyyy' | uppercase }}</small></p>
+            <div>
+              <span *ngFor="let type of pokemon.types" class="{{ type | pokemonTypeColor }}">
+                {{ type }}
+              </span>
+            </div>
+          </div>
+        </c-carousel-item>
+      </c-carousel-inner>
+      <c-carousel-control caption="Previous" direction="prev"></c-carousel-control>
+      <c-carousel-control caption="Next" direction="next"></c-carousel-control>
+    </c-carousel>
+  </div>
+   -->
